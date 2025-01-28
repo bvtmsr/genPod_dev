@@ -2,13 +2,11 @@ import React, { useEffect } from 'react';
 import { NodeResizer, NodeToolbar } from 'reactflow';
 import { GroupNodeProps } from './GroupNode.types';
 import { Badge, Flex, Grid, Text } from '@mantine/core';
-import { IconArrowForwardUp, IconEdit, IconFolderUp } from '@tabler/icons-react';
+import { IconArrowForwardUp, IconEdit } from '@tabler/icons-react';
 import { useFlowsStore } from 'src/canvas/store/flowstore';
-import classNames from 'classnames';
 import classes from './styles.module.css';
 import GroupNodeDrawer from './GroupNode.drawer';
 import { useDisclosure } from '@mantine/hooks';
-import { IconFolderDown } from '@tabler/icons-react';
 import { MdDelete } from 'react-icons/md';
 
 
