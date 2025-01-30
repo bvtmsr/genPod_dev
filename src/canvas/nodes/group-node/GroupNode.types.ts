@@ -13,7 +13,7 @@ import { NodeTypes } from 'src/canvas/store/types.store';
 // }
 export type GroupNodeProps = NodeProps<GroupNodeData>;
 
-export type GroupNodeFormDataUI = Omit<GroupNodeData, 'id' | 'type' | 'title'| 'children' | 'isExpanded'>;
+export type GroupNodeFormDataUI = Omit<GroupNodeData, 'id' | 'type' | 'title'| 'children' | 'isExpanded' | 'linkTo'>;
 
 export type GroupNodeData = Partial<{
   id: string;
@@ -25,6 +25,7 @@ export type GroupNodeData = Partial<{
   children: string[];
   isExpanded?: boolean;
   iconName: string;
+  linkTo?: string;
 }>;
 
 

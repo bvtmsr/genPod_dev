@@ -19,6 +19,7 @@ import { GrDetach } from "react-icons/gr";
 
 import { useProjectStore } from 'src/store/useProjectStore';
 import { useProjectOperations } from 'src/api/useProjectOperations/useProjectOperations';
+import AddandOpenNestedCanvas from 'src/canvas/components/AddandOpenNestedCanvas';
 
 export default function MicroserviceNode(props: NodeProps<CustomNodeFormData>) {
   const { selected, id } = props;
@@ -139,14 +140,7 @@ export default function MicroserviceNode(props: NodeProps<CustomNodeFormData>) {
 
             <Grid.Col span={2}>
               {/* <Link to={`/node/${id}`}> */}
-                <IconArrowForwardUp
-                  className={classes.iconHoverEffect}
-                  onClick={() => {
-                    handleOnLoadedProjectClick('4a976b90-506a-4afa-b968-238a5a3a0e81');
-                    // TODO: Implement Nested nodes
-                    // 4a976b90-506a-4afa-b968-238a5a3a0e81
-                  }}
-                />
+              <AddandOpenNestedCanvas  />
               {/* </Link> */}
             </Grid.Col>
           </Grid>

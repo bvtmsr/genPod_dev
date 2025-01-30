@@ -2,24 +2,22 @@ import React, { useEffect } from 'react';
 import { NodeResizer, NodeToolbar } from 'reactflow';
 import { GroupNodeProps } from './GroupNode.types';
 import { Badge, Flex, Grid, Text } from '@mantine/core';
-import { IconArrowForwardUp, IconEdit } from '@tabler/icons-react';
+import { IconEdit } from '@tabler/icons-react';
 import { useFlowsStore } from 'src/canvas/store/flowstore';
 import classes from './styles.module.css';
 import GroupNodeDrawer from './GroupNode.drawer';
 import { useDisclosure } from '@mantine/hooks';
 import { MdDelete } from 'react-icons/md';
+import AddandOpenNestedCanvas from 'src/canvas/components/AddandOpenNestedCanvas';
 
-
-const GroupNode: React.FC<GroupNodeProps> = ({ id, data, selected }) => {
-
+const GroupNode: React.FC<GroupNodeProps> = ({ id, data: nodeData, selected }) => {
   const [opened, { open, close }] = useDisclosure(false);  // GroupNodeDrawer
-
 
   const { deleteNode, getNodeFormData, setActiveNode } = useFlowsStore();
   const currentFormData = getNodeFormData(id);
 
   const onDelete = () => {
-    const children = data.children;
+    const children = nodeData.children;
     //delete child in group
     children?.forEach((child) => {
       deleteNode(child);
@@ -50,15 +48,18 @@ const GroupNode: React.FC<GroupNodeProps> = ({ id, data, selected }) => {
   );
 
 
+
+
+  
   return (
     <>
       <NodeToolbar className={classes.nodeToolbar} >
         {/* className={classNames(classes['node'], {
         [classes['node_selected']]: selected
       })}  */}
-        <MdDelete onClick={onDelete} className={classes.iconHoverEffect}  cursor={"pointer"} title="Delete" />
+        <MdDelete onClick={onDelete} className={classes.iconHoverEffect} cursor={"pointer"} title="Delete" />
         {/* <button onClick={onDelete}>Delete</button> */}
-        
+
         {/* {data.children && data.children?.length > 0 && (
           <button onClick={() => detachNodeFromGroup(data.children || [])}>Detach All Nodes</button>
         )} */}
@@ -94,21 +95,24 @@ const GroupNode: React.FC<GroupNodeProps> = ({ id, data, selected }) => {
               stroke={2}
               className={classes.iconHoverEffect}
             /> */}
-            <IconArrowForwardUp  className={classes.iconHoverEffect} />
+            {/* <IconArrowForwardUp className={classes.iconHoverEffect}
+              onClick={handleOnNestedCanvas}
+            /> */}
+            <AddandOpenNestedCanvas  />
           </Grid.Col>
 
         </Grid>
 
         <Grid className={classes.node__expander} gutter={0} justify="flex-end">
           <Grid.Col span={12} c={'white'} ta="right">
-          <Badge
+            <Badge
               variant="light"
               size="lg"
               c={'orange.5'}
               // leftSection={<IconFolderDown size={20} stroke={2} />}
               className={classes.iconBadge}
             >
-              {data.children?.length || 0}
+              {nodeData.children?.length || 0}
             </Badge>
           </Grid.Col>
         </Grid>

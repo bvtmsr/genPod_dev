@@ -5,7 +5,6 @@ import ReactFlow, {
   Background,
   BackgroundVariant,
   Controls,
-  type Node,
   Panel
 } from 'reactflow';
 import { useProjectOperations } from 'src/api/useProjectOperations/useProjectOperations';
@@ -14,7 +13,7 @@ import { InAppNotifications } from 'src/notifications';
 import { Project } from 'src/store/types';
 import { useProjectStore } from 'src/store/useProjectStore';
 
-import { Box, Button, Drawer, Text } from '@mantine/core';
+import { Box, Button, Drawer } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconCircleArrowUp,

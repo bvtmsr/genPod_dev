@@ -28,9 +28,10 @@ export default function Project() {
   const { addFlow, setNodes, setEdges } = useFlowsStore();
   const setActiveProject = useProjectStore(state => state.setActiveProject);
   const projects = useProjectStore(state => state.projects);
-  console.log('mahesh', params);
+
 
   useEffect(() => {
+    console.log('mahesh', params);
     addFlow('flow' + params.projectId);
     setActiveProject(params.projectId);
     (async function () {
