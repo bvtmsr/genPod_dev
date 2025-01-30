@@ -1,7 +1,7 @@
 import { NodeTypes } from '../store/types.store'
 import { getInitialDBNodeFormData } from './db-node/DBNode.utils'
 import { getInitialGroupNodeFormData } from './group-node/GroupNode.utils'
-import { getInitialNodeFormData } from './microservice/Node.utils'
+import { getInitialNodeFormData } from './nodeservice/Node.utils'
 
 export const getInitialNodesFormData = (type: NodeTypes) => {
 	if (type === NodeTypes.MICROSERVICE) {

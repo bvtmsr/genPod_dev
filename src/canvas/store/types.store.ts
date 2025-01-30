@@ -1,7 +1,7 @@
 import { Edge, Node, OnConnect, OnEdgesChange, OnNodesChange } from 'reactflow';
 import { ClientNodeFormData } from '../nodes/client-node/ClientNode.types';
 import { DBNodeFormData } from '../nodes/db-node/DBNode.types';
-import { NodeData } from '../nodes/microservice/Nodetypes.types';
+import { NodeData } from '../nodes/nodeservice/Nodetypes.types';
 import { GroupNodeData } from '../nodes/group-node/GroupNode.types';
 
 export enum NodeTypes {

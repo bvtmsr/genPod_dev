@@ -9,21 +9,20 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Group, Select, SelectProps, Text, Textarea } from '@mantine/core';
 
 import {
-  GroupNodeData,
-  GroupNodeFormDataUI
-} from '../GroupNode.types';
+  NodeData,
+  NodeDataUI
+} from '../Nodetypes.types';
 import { schema } from './resolvers';
 import icons from 'src/canvas/nodes/nodeservice/form/data';
 
-export default function GroupNodeDrawerForm(
-  props: NodeDrawerFormProps<GroupNodeData>
+export default function MicroServiceNodeDrawerForm(
+  props: NodeDrawerFormProps<NodeData>
 ) {
   const { getNodeFormData, setNodeFormData } = useFlowsStore();
-  const groupnodeFormData = getNodeFormData(props.nodeId);
- 
-
-  const form = useForm<GroupNodeFormDataUI>({
-    defaultValues: structuredClone(groupnodeFormData),
+  const currentFormData = getNodeFormData(props.nodeId);
+  
+  const form = useForm<NodeDataUI>({
+    defaultValues: structuredClone(currentFormData),
     resolver: zodResolver(schema),
     reValidateMode: 'onChange',
     criteriaMode: 'all'
@@ -42,45 +41,35 @@ export default function GroupNodeDrawerForm(
   };
 
   const transformToNodeData = (
-    data: GroupNodeFormDataUI
-  ): GroupNodeData => {
-    const formData: GroupNodeData = {
+    data: NodeDataUI
+  ): NodeData => {
+    const formData: NodeData = {
       name: data.name,
       id: `form${props.nodeId}`,
       description: data.description,
-      type: NodeTypes.GROUP,
+      type: NodeTypes.MICROSERVICE,
       requirements: data.requirements,
       iconName: data.iconName
     };
     return formData;
   };
-
-
-  const handleGroupNodeDataChange = () => {
+  const handleNodeDataChange = () => {
     const transformedData = transformToNodeData(form.getValues());
-    setNodeFormData(transformedData);
+    setNodeFormData(transformedData, props.nodeId);
   };
 
   const handleOnGenerateButtonClick = () => {
     props.onGenerateButtonClick();
-    handleGroupNodeDataChange();
+    handleNodeDataChange();
   };
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitCapture = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleGroupNodeDataChange();
+    handleNodeDataChange();
     const transformedData = transformToNodeData(form.getValues());
-
     props.onSubmit(transformedData);
   };
 
 
-  // const onSubmit = form.handleSubmit((data) => {
-  //   e.preventDefault();
-  //   handleGroupNodeDataChange();
-  //   const transformedData = transformToNodeData(data);
-  //   setNodeFormData(transformedData);
-  //   props.onSubmit(transformedData);
-  // });
 
   const renderSelectOption: SelectProps['renderOption'] = ({ option, checked }) => (
     <Group>
@@ -94,7 +83,7 @@ export default function GroupNodeDrawerForm(
   );
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmitCapture}>
       <TextInput
         control={form.control}
         label="Name"
@@ -121,7 +110,9 @@ export default function GroupNodeDrawerForm(
             placeholder="Select Icon"
             data={icons}
             onChange={value => {
+              
               form.setValue('iconName', value ?? '', { shouldValidate: true });
+
             }}
             renderOption={renderSelectOption}
             {...rest}

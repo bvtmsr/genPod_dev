@@ -41,6 +41,7 @@ export default function Project() {
       setNodes(nodes);
       setEdges(edges);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const projectDetails = projects.find(

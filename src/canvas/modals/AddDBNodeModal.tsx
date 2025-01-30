@@ -1,6 +1,6 @@
 import { Box, Button, Group, TextInput } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { getInitialNodeFormData } from 'src/canvas/nodes/microservice/Node.utils';
+import { getInitialNodeFormData } from 'src/canvas/nodes/nodeservice/Node.utils';
 import { MicroServiceNode, NodeTypes } from 'src/canvas/store/types.store';
 import { useFlowsStore } from '../store/flowstore';
 

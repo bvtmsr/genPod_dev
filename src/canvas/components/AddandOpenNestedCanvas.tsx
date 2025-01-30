@@ -31,8 +31,9 @@ export default function AddandOpenNestedCanvas() {
         project: Project;
     }
     const { postProject, getProject } = useProjectOperations();
-    const { setActiveProject } = useProjectStore();
+   // const { setActiveProject } = useProjectStore();
     const navigate = useNavigate();
+    const setActiveProject = useProjectStore(state => state.setActiveProject);
     const switchCanvasCustomeHandler = (projectId: string) => {
 
         //  navigate to the project page
