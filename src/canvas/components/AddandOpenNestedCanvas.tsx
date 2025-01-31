@@ -20,6 +20,7 @@ export default function AddandOpenNestedCanvas() {
     const { screenToFlowPosition } = useReactFlow();
 
     const { getNodesAndEdges, setNodes, addFlow, setEdges } = useFlowsStore();
+    //const { setActiveProject } = useProjectStore();
 
     const param = useParams() as unknown as ProjectParams;
 
@@ -34,6 +35,8 @@ export default function AddandOpenNestedCanvas() {
    // const { setActiveProject } = useProjectStore();
     const navigate = useNavigate();
     const setActiveProject = useProjectStore(state => state.setActiveProject);
+    console.log('selectNode', useProjectStore);
+    
     const switchCanvasCustomeHandler = (projectId: string) => {
 
         //  navigate to the project page
@@ -41,6 +44,7 @@ export default function AddandOpenNestedCanvas() {
 
         //  cath this code from Project  page
         addFlow('flow' + projectId);
+    
         setActiveProject(projectId);
         (async function () {
             const { data } = await getProject(projectId);
@@ -59,7 +63,7 @@ export default function AddandOpenNestedCanvas() {
         }
         const nodeType = 'microservice' as NodeTypes;
         const position = screenToFlowPosition({
-            x: 200,
+            x: 400,
             y: 200,
         });
         const newNode: CustomNode = {
