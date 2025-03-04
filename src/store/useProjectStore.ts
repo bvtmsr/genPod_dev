@@ -3,6 +3,7 @@ import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { ProjectStoreActions, ProjectStoreState } from './types';
 import axiosMiddleware from 'src/api/axiosMiddleware';
+import { Project } from 'reactflow';
 
 export const useProjectStore = create<
   ProjectStoreState & ProjectStoreActions
@@ -11,12 +12,39 @@ export const useProjectStore = create<
     persist(
       immer((set, get) => {
         return {
-          activeProject: null,
+          activeProject: [],
           projects: [],
           setActiveProject: projectId => {
-            if (!projectId) return set({ activeProject: null });
-            const activeProject = get().projects.find(p => p.id == projectId);
-            return set({ activeProject });
+          //  console.log('projectId', projectId);
+            
+            if (!projectId) return set(state => {
+              return { activeProject: [] };
+            });
+            const activePro = get().projects.find(p => p.id == projectId);
+              console.log('projectId', projectId, get().projects);
+            return set(state => {
+              console.log('-------------debug----------------');
+              console.log('state.activeProject', activePro);
+              
+              const newActiveProject = state.activeProject.find(p => p.id == projectId)
+                ? state.activeProject
+                : [...state.activeProject, activePro];
+                
+                console.log('projectId', projectId, newActiveProject);
+                
+                console.log('-------------debugEnd ----------------');
+                
+              return { activeProject: newActiveProject };
+            });
+          },
+          addProject: (newProject:Project) => {
+            set(state => {
+              const newActiveProject = [...state.activeProject, newProject];
+              return { activeProject: newActiveProject };
+            });
+          },
+          getProjects: () => {
+            return get().activeProject;
           },
           setProjects: projects => {
             set({ projects });

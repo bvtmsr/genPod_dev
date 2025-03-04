@@ -9,6 +9,7 @@ import GroupNodeDrawer from './GroupNode.drawer';
 import { useDisclosure } from '@mantine/hooks';
 import { MdDelete } from 'react-icons/md';
 import AddandOpenNestedCanvas from 'src/canvas/components/AddandOpenNestedCanvas';
+import BacktoCanvas from 'src/canvas/components/BacktoCanvas';
 
 const GroupNode: React.FC<GroupNodeProps> = ({ id, data: nodeData, selected }) => {
   const [opened, { open, close }] = useDisclosure(false);  // GroupNodeDrawer
@@ -28,6 +29,8 @@ const GroupNode: React.FC<GroupNodeProps> = ({ id, data: nodeData, selected }) =
 
 
   useEffect(() => {
+    console.log(getNodeFormData(id)?.linkTo);
+    
     if (selected) setActiveNode(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
@@ -47,10 +50,6 @@ const GroupNode: React.FC<GroupNodeProps> = ({ id, data: nodeData, selected }) =
     />
   );
 
-
-
-
-  
   return (
     <>
       <NodeToolbar className={classes.nodeToolbar} >
@@ -58,8 +57,7 @@ const GroupNode: React.FC<GroupNodeProps> = ({ id, data: nodeData, selected }) =
         [classes['node_selected']]: selected
       })}  */}
         <MdDelete onClick={onDelete} className={classes.iconHoverEffect} cursor={"pointer"} title="Delete" />
-        {/* <button onClick={onDelete}>Delete</button> */}
-
+        
         {/* {data.children && data.children?.length > 0 && (
           <button onClick={() => detachNodeFromGroup(data.children || [])}>Detach All Nodes</button>
         )} */}
@@ -76,6 +74,9 @@ const GroupNode: React.FC<GroupNodeProps> = ({ id, data: nodeData, selected }) =
         h="min-content"
       >
         <Grid className={classes.node__header}>
+          {(getNodeFormData(id)?.linkTo) ?? <Grid.Col span={1}>
+            <BacktoCanvas />
+          </Grid.Col>}
           <Grid.Col span={5}>
             <Text tt="uppercase" c="orange.5" fw="bold" ta="left">
               {currentFormData?.name || 'Group'}
@@ -89,16 +90,9 @@ const GroupNode: React.FC<GroupNodeProps> = ({ id, data: nodeData, selected }) =
               }}
             />
           </Grid.Col>
-          <Grid.Col span={2} c={'white'} ta="right">
-            {/* <IconFolderDown
-              size={32}
-              stroke={2}
-              className={classes.iconHoverEffect}
-            /> */}
-            {/* <IconArrowForwardUp className={classes.iconHoverEffect}
-              onClick={handleOnNestedCanvas}
-            /> */}
-            <AddandOpenNestedCanvas  />
+          <Grid.Col span={1} c={'white'} ta="right">
+            
+            <AddandOpenNestedCanvas />
           </Grid.Col>
 
         </Grid>

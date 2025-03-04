@@ -10,17 +10,19 @@ import { CustomNode, GroupNode, NodeTypes } from "../store/types.store";
 import { getInitialNodesFormData } from "../nodes/utils";
 import { getId } from "../utils";
 import { useReactFlow } from "reactflow";
-
+import { useSyncActions } from 'src/hooks/useSyncActions';
 
 interface ProjectParams {
     projectId: string;
 }
 
 export default function AddandOpenNestedCanvas() {
+    const { syncProjects } = useSyncActions();
+
     const { screenToFlowPosition } = useReactFlow();
 
     const { getNodesAndEdges, setNodes, addFlow, setEdges } = useFlowsStore();
-    //const { setActiveProject } = useProjectStore();
+   
 
     const param = useParams() as unknown as ProjectParams;
 
@@ -35,32 +37,34 @@ export default function AddandOpenNestedCanvas() {
    // const { setActiveProject } = useProjectStore();
     const navigate = useNavigate();
     const setActiveProject = useProjectStore(state => state.setActiveProject);
-    console.log('selectNode', useProjectStore);
+   // console.log('selectNode', useProjectStore);
     
     const switchCanvasCustomeHandler = (projectId: string) => {
-
+        
         //  navigate to the project page
         navigate(`/project/${projectId}`);
 
         //  cath this code from Project  page
         addFlow('flow' + projectId);
-    
-        setActiveProject(projectId);
+         console.log('IN AddandOpenNestedCanvas projectId', projectId);
+         
+        //  setActiveProject(projectId);
         (async function () {
             const { data } = await getProject(projectId);
             if (!data) return;
             const { edges, nodes } = data.flow;
             setNodes(nodes);
             setEdges(edges);
+            setActiveProject(projectId);
         })();
     }
 
     const handleOnNestedCanvas = async () => {
-        if (selectNode?.data?.linkTo) {
-            console.log('selectNode?.data?.linkTo', selectNode);
-            switchCanvasCustomeHandler(selectNode?.data?.linkTo)
-            return;
-        }
+        // if (selectNode?.data?.linkTo) {
+        //     console.log('selectNode?.data?.linkTo', selectNode);
+        //     switchCanvasCustomeHandler(selectNode?.data?.linkTo)
+        //     return;
+        // }
         const nodeType = 'microservice' as NodeTypes;
         const position = screenToFlowPosition({
             x: 400,
@@ -98,6 +102,7 @@ export default function AddandOpenNestedCanvas() {
                 }
                 return node;
             });
+            await syncProjects();
             setNodes(updatedNode);
             switchCanvasCustomeHandler(pData.project.id)
         } else {

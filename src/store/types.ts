@@ -28,7 +28,7 @@ export interface Project {
 
 export type ProjectStoreState = {
   projects: Project[];
-  activeProject: Project | null;
+  activeProject: Project[]; // Changed from Project | null to Project[]
 };
 export type ProjectStoreActions = {
   setProjects: (projects: Project[]) => void;

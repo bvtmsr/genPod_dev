@@ -31,7 +31,7 @@ export default function Project() {
 
 
   useEffect(() => {
-    console.log('mahesh', params);
+   // console.log('mahesh', params);
     addFlow('flow' + params.projectId);
     setActiveProject(params.projectId);
     (async function () {

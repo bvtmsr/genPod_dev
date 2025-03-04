@@ -10,15 +10,14 @@ import { useFlowsStore } from '../../store/flowstore';
 import { CustomNodeFormData, NodeTypes } from '../../store/types.store';
 import NodeDrawer from './Node.drawer';
 import classes from './styles.module.css';
-// import { get, gt } from 'lodash';
+
 
 import { MdDelete } from "react-icons/md";
 import { GroupNodeData } from '../group-node/GroupNode.types';
 import { GrDetach } from "react-icons/gr";
 
-// import { useProjectStore } from 'src/store/useProjectStore';
-// import { useProjectOperations } from 'src/api/useProjectOperations/useProjectOperations';
 import AddandOpenNestedCanvas from 'src/canvas/components/AddandOpenNestedCanvas';
+import BacktoCanvas from 'src/canvas/components/BacktoCanvas';
 
 export default function MicroserviceNode(props: NodeProps<CustomNodeFormData>) {
   const { selected, id } = props;
@@ -79,36 +78,15 @@ export default function MicroserviceNode(props: NodeProps<CustomNodeFormData>) {
       alt={getNodeFormData(id)?.name}
     />
   );
-  // const setActiveProject = useProjectStore(state => state.setActiveProject);
-  // const { getProject } = useProjectOperations();
-  // const navigate = useNavigate();
-  // const handleOnLoadedProjectClick = (projectId: string) => {
-  //   setActiveProject(projectId);
-  //   // navigate to the project page
-  //   navigate(`/project/${projectId}`);
 
-  //   //  cath this code from Project  page
-  //   addFlow('flow' + projectId);
-  //   setActiveProject(projectId);
-  //   (async function () {
-  //     const { data } = await getProject(projectId);
-  //     if (!data) return;
-  //     const { edges, nodes } = data.flow;
-  //     setNodes(nodes);
-  //     setEdges(edges);
-  //   })();
-  //   // 
-  // };
 
   if (props.type === NodeTypes.MICROSERVICE)
     return (
       <>
         <NodeToolbar className={classes.nodeToolbar}  >
-          {/* <button onClick={() => deleteNode(id)} ><MdDelete color='orange' /></button> */}
 
-          {/* <IconTrash onClick={() => deleteNode(id)} />*/}
           <MdDelete onClick={() => deleteNode(id)} className={classes.iconHoverEffect} cursor={"pointer"} title='Delete' />
-          {/* <button onClick={onDetach}>Detach</button> */}
+
           {hasParent && <GrDetach onClick={onDetach} cursor={"pointer"} className={classes.iconHoverEffect} title='Detach' />}
         </NodeToolbar>
 
@@ -123,13 +101,17 @@ export default function MicroserviceNode(props: NodeProps<CustomNodeFormData>) {
           h="min-content"
         >
           <Grid className={classes.node__header}>
-            <Grid.Col span={5}>
+            {(getNodeFormData(id)?.linkTo) ? <Grid.Col span={1.5} >
+              <BacktoCanvas />
+            </Grid.Col>
+              : ""}
+            <Grid.Col span={5} >
               <Text tt="uppercase" c="orange.5" fw="bold" ta="left">
                 {getNodeFormData(id)?.name}
               </Text>
             </Grid.Col>
             <Grid.Col span={3}>{displayImages}</Grid.Col>
-            <Grid.Col span={2}>
+            <Grid.Col span={1}>
               <IconEdit
                 onClick={() => {
                   open();
@@ -137,9 +119,9 @@ export default function MicroserviceNode(props: NodeProps<CustomNodeFormData>) {
               />
             </Grid.Col>
 
-            <Grid.Col span={2}>
+            <Grid.Col span={1.5}>
               {/* <Link to={`/node/${id}`}> */}
-              <AddandOpenNestedCanvas  />
+              <AddandOpenNestedCanvas />
               {/* </Link> */}
             </Grid.Col>
           </Grid>

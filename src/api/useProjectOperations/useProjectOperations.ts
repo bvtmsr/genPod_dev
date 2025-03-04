@@ -78,6 +78,19 @@ export const useProjectOperations = () => {
     }
   };
 
+  const getActiveProjects = async (
+    options?: UseOperationsOptions<Project[]>
+  ): UseOperationsReturnType<Project[]> => {
+    try {
+      const { data } = await axiosMiddleware.get(`/active-projects`);
+      options?.onSuccess?.(data);
+      return { data };
+    } catch (error) {
+      options?.onFail?.(error);
+      return { error };
+    }
+  };
+
   const getProjectSnapshots = async (
     projectId: string,
     params?: { count: string; orderBy: string },
@@ -110,6 +123,7 @@ export const useProjectOperations = () => {
     getProject,
     updateProject,
     deleteProject,
+    getActiveProjects,
     getProjectSnapshots
   };
 };

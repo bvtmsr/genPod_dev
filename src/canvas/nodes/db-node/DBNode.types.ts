@@ -7,6 +7,7 @@ export type DBNodeFormData = Partial<{
 	port: string
 	type: NodeTypes
 	iconName: string
+	linkTo: string
 }>
 
 export type DBNodeFormDataUI = Omit<DBNodeFormData, 'id' | 'type'>
