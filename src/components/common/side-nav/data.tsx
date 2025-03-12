@@ -8,6 +8,7 @@ import {
   IconShieldCode,
   IconSitemap,
   IconTag,
+  IconUser,
   TablerIconsProps
 } from '@tabler/icons-react';
 import { FaChalkboardTeacher } from 'react-icons/fa';
@@ -218,3 +219,23 @@ export type SideNavData = {
   initiallyOpened?: boolean;
   links?: { label: string; link: string }[];
 }[];
+
+// export type sideNavFooterData = {
+//   id: string;
+//   label: string;
+//   icon: (props: TablerIconsProps) => JSX.Element;
+//   initiallyOpened?: boolean;
+//   links?: { label: string; link: string }[];
+// }[];
+
+export const footerLinks:SideNavData = [{
+  id: 'profile',
+  label: 'Profile',
+  icon: IconUser,
+  links: [
+    {
+      label: 'Projects',
+      link: '/projects'
+    }
+  ]
+}] ;

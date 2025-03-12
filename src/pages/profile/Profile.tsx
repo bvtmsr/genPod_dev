@@ -1,27 +1,29 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Layout from 'src/components/common/layout/Layout';
 import User from 'src/components/user';
 import Protected from 'src/hoc/protected';
-
 import { Box, Tabs, Text } from '@mantine/core';
-import { IconFileSettings } from '@tabler/icons-react';
 
 import classes from './profile.module.css';
 import LayoutWithSideBar from 'src/components/common/layout/LayoutWithSideBar';
+import { IconFileSettings } from '@tabler/icons-react';
 
 interface ProfileProps {}
 const Profile: React.FC<ProfileProps> = () => {
   const [searchParams] = useSearchParams();
   const defaultActiveTabName = searchParams.get('activeTab') || 'projects';
+  console.log(defaultActiveTabName);
+  
   return (
     <Protected>
       <LayoutWithSideBar>
         <Box className={classes.box}>
           <Text variant="text" size="xl" fw="bolder">
-            Profile
+            {defaultActiveTabName.charAt(0).toUpperCase()+ defaultActiveTabName.slice(1)}
           </Text>
-          <Tabs
+
+          <User.Projects />
+          {/* <Tabs
             defaultValue={defaultActiveTabName}
             orientation="vertical"
             activateTabWithKeyboard
@@ -40,7 +42,7 @@ const Profile: React.FC<ProfileProps> = () => {
             <Tabs.Panel value="projects">
               <User.Projects />
             </Tabs.Panel>
-          </Tabs>
+          </Tabs> */}
         </Box>
       </LayoutWithSideBar>
     </Protected>

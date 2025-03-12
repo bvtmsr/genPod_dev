@@ -36,7 +36,7 @@ import {
 
 import { NavBarLinksGroup } from '../nav-links-group/NavLinksGroup';
 import { NavBarLinksGroupForComingSoon } from '../nav-links-group/NavLinksGroupForComingSoon';
-import { SideNavData } from './data';
+import { SideNavData, footerLinks } from './data';
 import classes from './SideNavbar.module.css';
 
 interface SideNavbarProps {
@@ -44,6 +44,7 @@ interface SideNavbarProps {
 }
 
 export default function SideNavbar({ data }: SideNavbarProps) {
+  const profileData  = footerLinks;
   const [isNavOpen, setIsNavOpen] = useState(true);
   const { getFeatureFlag } = useFeatureFlagStore();
   const { colorScheme, setColorScheme } = useMantineColorScheme({
@@ -77,6 +78,11 @@ export default function SideNavbar({ data }: SideNavbarProps) {
     return <NavBarLinksGroup {...item} key={item.label} />;
   });
 
+  // Profile links
+  const profileLinks:JSX.Element[] = profileData.map(item => {
+    return <NavBarLinksGroup {...item} key={item.label} />;
+  });
+
   const navToggleIcon = isNavOpen ? (
     <IconArrowNarrowLeft
       className="color-white absolute -right-3 top-1/3 bg-orange-500 border rounded-full z-10 cursor-pointer rotate-0 md:top-1/3 lg:top-1/2"
@@ -88,8 +94,7 @@ export default function SideNavbar({ data }: SideNavbarProps) {
       onClick={handleNavToggle}
     />
   );
-  const [opened, setOpened] = useState<boolean>(true);
-  const toggleOpen = () => setOpened(o => !o);
+  
   return (
     <nav
       className={`${classes.navbar} ${
@@ -138,61 +143,7 @@ export default function SideNavbar({ data }: SideNavbarProps) {
 
           <div className={classes.linksInner}>{links}</div>
           <div className={classes.footer}>
-            {/* onClick={toggleOpen} */}
-            {/* <UnstyledButton className={classes.control}>
-            <Group justify="space-between" gap={0}>
-            <Box style={{ display: 'flex', alignItems: 'center' }}>
-                <ThemeIcon variant="dark" size={30}>
-                  <IconHttpConnect style={{ width: rem(18), height: rem(18) }} />
-                </ThemeIcon>
-                <Box ml="md" w={rem(150)}>
-                  {'label'}
-                </Box>
-              </Box>
-
-              <IconChevronRight
-                className={classes.chevron}
-                stroke={1.5}
-                style={{
-                  width: rem(16),
-                  height: rem(16),
-                  // transform: opened ? 'rotate(-90deg)' : 'none'
-                }}
-              />
-
-            </Group>
-          </UnstyledButton> */}
-          {/* <Collapse in={opened}>{items}</Collapse> */}
-            <UnstyledButton onClick={toggleOpen} className={classes.control}>
-              <Group justify="space-between" gap={0}>
-                <Box style={{ display: 'flex', alignItems: 'center' }}>
-                  <ThemeIcon variant="dark" size={30}>
-                    <IconHttpConnect style={{ width: rem(18), height: rem(18) }} />
-                  </ThemeIcon>
-                  <Box ml="md" w={rem(150)}>
-                    {'Profile'}
-                  </Box>
-                </Box>
-
-                <IconChevronRight
-                  className={classes.chevron}
-                  stroke={1.5}
-                  style={{
-                    width: rem(16),
-                    height: rem(16),
-                    transform: opened ? 'rotate(-90deg)' : 'none'
-                  }}
-                />
-
-              </Group>
-            </UnstyledButton>
-            <Collapse in={opened}>{'items'}</Collapse>
-
-            <Link to="/profile" className={classes.link}>
-              <IconUser className={classes.linkIcon} stroke={1.5} />
-              <span>Profile</span>
-            </Link>
-
+          <div>{profileLinks}</div>
             <Link
               to="/login"
               className={classes.link}
