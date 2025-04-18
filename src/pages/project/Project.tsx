@@ -15,6 +15,7 @@ import { useProjectStore } from 'src/store/useProjectStore';
 import { Anchor, Breadcrumbs, Flex, Grid, rem, Tabs } from '@mantine/core';
 import { IconHttpConnect, IconList, IconPhoto } from '@tabler/icons-react';
 
+
 interface ProjectParams {
   projectId: string;
 }
@@ -28,7 +29,9 @@ export default function Project() {
   const { addFlow, setNodes, setEdges } = useFlowsStore();
   const setActiveProject = useProjectStore(state => state.setActiveProject);
   const projects = useProjectStore(state => state.projects);
+  const getActiveProject = useProjectStore(state => state.activeProject);
 
+console.log(getActiveProject);
 
   useEffect(() => {
    // console.log('mahesh', params);
@@ -47,7 +50,20 @@ export default function Project() {
   const projectDetails = projects.find(
     project => project.id == params.projectId
   );
+  const breadcrumbsDyanamic = [];
+  for (const item of getActiveProject) {
+    breadcrumbsDyanamic.push(
+      <Anchor href={`/project/${item.id}`} key={item.id}>
+        {item.name}
+      </Anchor>
+    );
+    if (item.id === params.projectId) break;
+   
+  }
+  
 
+  console.log(breadcrumbsDyanamic);
+  
   const items = [
     { title: 'Home', href: '/' },
     {

@@ -35,7 +35,7 @@ export default function BacktoCanvas() {
   
     const navigate = useNavigate();
     const setActiveProject = useProjectStore(state => state.setActiveProject);
-    console.log('selectNode', selectNode?.data.linkTo);
+    //console.log('selectNode', selectNode?.data.linkTo);
     
     const switchCanvasCustomeHandler = (projectId: string) => {
 

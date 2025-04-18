@@ -37,7 +37,7 @@ export default function AddandOpenNestedCanvas() {
    // const { setActiveProject } = useProjectStore();
     const navigate = useNavigate();
     const setActiveProject = useProjectStore(state => state.setActiveProject);
-   // console.log('selectNode', useProjectStore);
+   //console.log('selectNode', selectNode);
     
     const switchCanvasCustomeHandler = (projectId: string) => {
         
@@ -46,7 +46,7 @@ export default function AddandOpenNestedCanvas() {
 
         //  cath this code from Project  page
         addFlow('flow' + projectId);
-         console.log('IN AddandOpenNestedCanvas projectId', projectId);
+         //console.log('IN AddandOpenNestedCanvas projectId', projectId);
          
         //  setActiveProject(projectId);
         (async function () {
@@ -60,11 +60,14 @@ export default function AddandOpenNestedCanvas() {
     }
 
     const handleOnNestedCanvas = async () => {
-        // if (selectNode?.data?.linkTo) {
-        //     console.log('selectNode?.data?.linkTo', selectNode);
-        //     switchCanvasCustomeHandler(selectNode?.data?.linkTo)
-        //     return;
-        // }
+        if (selectNode?.data?.linkTo) {
+           // console.log('selectNode?.data?.linkTo', selectNode);
+            switchCanvasCustomeHandler(selectNode?.data?.linkTo)
+            return;
+        }
+       // console.log('selectNode', selectNode);
+       // console.log('*********Not In a nested canvas*********',selectNode?.data?.linkTo);
+     //   return
         const nodeType = 'microservice' as NodeTypes;
         const position = screenToFlowPosition({
             x: 400,
@@ -84,6 +87,7 @@ export default function AddandOpenNestedCanvas() {
                 edges: []
             }
         }
+        // post the project in db return project data with ID
         const { data } = await postProject(project);
 
         const pData = typeof data === 'string' ? (JSON.parse(data) as ProjectResponse) : { message: '', project: {} as Project };

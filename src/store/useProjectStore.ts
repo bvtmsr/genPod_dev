@@ -21,18 +21,18 @@ export const useProjectStore = create<
               return { activeProject: [] };
             });
             const activePro = get().projects.find(p => p.id == projectId);
-              console.log('projectId', projectId, get().projects);
+              //console.log('projectId', projectId, get().projects);
             return set(state => {
-              console.log('-------------debug----------------');
-              console.log('state.activeProject', activePro);
+              //console.log('-------------debug----------------');
+             // console.log('state.activeProject', activePro);
               
               const newActiveProject = state.activeProject.find(p => p.id == projectId)
                 ? state.activeProject
                 : [...state.activeProject, activePro];
                 
-                console.log('projectId', projectId, newActiveProject);
+               // console.log('projectId', projectId, newActiveProject);
                 
-                console.log('-------------debugEnd ----------------');
+               // console.log('-------------debugEnd ----------------');
                 
               return { activeProject: newActiveProject };
             });
